@@ -38,7 +38,9 @@ workflows:
       - deploy:
           requires:
             - build-and-push
-          context: aws-ec2
+          context:
+            - docker-hub          # ← This is missing in your current config
+            - aws-ec2
           filters:
             branches:
               only: main
