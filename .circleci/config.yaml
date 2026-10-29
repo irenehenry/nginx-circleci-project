@@ -1,0 +1,44 @@
+version: 2.1
+
+jobs:
+  build-and-push:
+    docker:
+      - image: cimg/base:current
+    steps:
+      - checkout
+      - setup_remote_docker:
+          version: default
+      - run:
+          name: Build and Push Docker Image
+          command: |
+            echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
+            IMAGE=$DOCKER_USERNAME/nginx-private-sample
+            docker build -t $IMAGE:${CIRCLE_SHA1:0:7} -t $IMAGE:latest ./frontend
+            docker push $IMAGE:${CIRCLE_SHA1:0:7}
+            docker push $IMAGE:latest
+
+  deploy:
+    docker:
+      - image: cimg/base:current
+    steps:
+      - checkout
+      - add_ssh_keys
+      - run:
+          name: Deploy to private Ubuntu EC2
+          command: |
+            scp -o StrictHostKeyChecking=no deploy/deploy.sh $EC2_USER@$EC2_HOST:~/
+            ssh -o StrictHostKeyChecking=no $EC2_USER@$EC2_HOST \
+              "bash ~/deploy.sh $DOCKER_USERNAME/nginx-private-sample:latest"
+
+workflows:
+  build-deploy:
+    jobs:
+      - build-and-push:
+          context: docker-hub
+      - deploy:
+          requires:
+            - build-and-push
+          context: aws-ec2
+          filters:
+            branches:
+              only: main

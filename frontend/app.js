@@ -1,0 +1,1 @@
+console.log("Private Nginx Sample Application loaded successfully");

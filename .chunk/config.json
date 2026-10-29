@@ -1,0 +1,8 @@
+{
+  "validate": {
+    "commands": [
+      "docker build -t nginx-private-test ./frontend",
+      "docker run --rm nginx-private-test nginx -t"
+    ]
+  }
+}

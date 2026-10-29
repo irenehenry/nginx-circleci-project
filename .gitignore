@@ -1,0 +1,5 @@
+*.pem
+*.ppk
+.env
+.DS_Store
+node_modules/
