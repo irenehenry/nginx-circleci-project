@@ -3,3 +3,11 @@
 .env
 .DS_Store
 node_modules/
+
+# Chunk local files (do not commit)
+.chunk/*-pool.json
+.chunk/cache/
+.agents/
+.claude/
+.opencode/
+.git/hooks/

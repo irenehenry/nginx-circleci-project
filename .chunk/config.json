@@ -1,4 +1,9 @@
 {
+  "vcs": {
+    "org": "irenehenry",
+    "repo": "nginx-circleci-project"
+  },
+  "orgID": "188f3bb6-03af-4733-b97d-40cc1f175f0c",
   "validate": {
     "commands": [
       "docker build -t nginx-private-test ./frontend",
