@@ -4,10 +4,14 @@
     "repo": "nginx-circleci-project"
   },
   "orgID": "188f3bb6-03af-4733-b97d-40cc1f175f0c",
-  "validate": {
-    "commands": [
-      "docker build -t nginx-private-test ./frontend",
-      "docker run --rm nginx-private-test nginx -t"
-    ]
-  }
+  "commands": [
+    {
+      "name": "docker-build",
+      "run": "docker build -t nginx-private-test ./frontend"
+    },
+    {
+      "name": "nginx-test",
+      "run": "docker run --rm nginx-private-test nginx -t"
+    }
+  ]
 }
