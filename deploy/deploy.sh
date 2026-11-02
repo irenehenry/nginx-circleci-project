@@ -7,7 +7,7 @@ docker stop nginx-private-sample 2>/dev/null || true
 docker rm nginx-private-sample 2>/dev/null || true
 docker run -d \
   --name nginx-private-sample \
-  --restart always \
+  --restart unless-stopped \
   -p 80:80 \
   $IMAGE
 echo ">>> Deployment successful!"
